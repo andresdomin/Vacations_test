@@ -69,10 +69,8 @@ Vacaciones::Application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address              => "smtp.gmail.com",
-    :port                 => 587,
-    :user_name            => 'intergrupo@igapps.co',
-    :password             => 'ig4ppzIG',
-    :authentication       => 'plain',
-    :enable_starttls_auto => true  }
+    :address              => "10.100.10.117 ",
+    :port                 => 25,
+    :user_name            => 'solicitudesvacaciones@intergrupo.com',
+    }
 end

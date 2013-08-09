@@ -35,14 +35,12 @@ Vacaciones::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
   
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
-  
+  config.action_mailer.default_url_options = { :host => 'solicitudes.igapps.co' }
+
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address              => "smtp.gmail.com",
-    :port                 => 587,
-    :user_name            => 'intergrupoaplicaciones@gmail.com',
-    :password             => 'ig4ppz2011',
-    :authentication       => 'plain',
-    :enable_starttls_auto => true  }
+    :address              => "10.100.10.117 ",
+    :port                 => 25,
+    :user_name            => 'solicitudesvacaciones@intergrupo.com',
+    }
 end

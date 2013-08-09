@@ -2,7 +2,7 @@
 class RequestMailer < ActionMailer::Base
   helper :users
   
-  default from: "integrupoaplicaciones@gmail.com"
+  default from: "solicitudesvacaciones@intergrupo.com"
 
   def create_request(request)
     @request = request
@@ -30,7 +30,7 @@ class RequestMailer < ActionMailer::Base
 
   def bulk_requests(requests)
     @requests = requests
-    mail to: 'soportenomina@intergrupo.com', subject: '[VACACIONES] Informe de solicitudes del dia'
+    mail to: 'adominguez@intergrupo.com', subject: '[VACACIONES] Informe de solicitudes del dia'
   end
 
   def approve_request(request)
