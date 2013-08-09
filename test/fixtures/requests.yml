@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  begin_at: 2012-04-11
+  begin_at_approved: 2012-04-11
+  end_at: 2012-04-11
+  end_at_approved: 2012-04-11
+  days: 
+  days_approved: 
+  comments: MyText
+  comments_approved: MyText
+  requester_email: MyString
+  approver_email: MyString
+  status: MyString
+  requested_at: 2012-04-11
+  approved_at: 2012-04-11
+
+two:
+  begin_at: 2012-04-11
+  begin_at_approved: 2012-04-11
+  end_at: 2012-04-11
+  end_at_approved: 2012-04-11
+  days: 
+  days_approved: 
+  comments: MyText
+  comments_approved: MyText
+  requester_email: MyString
+  approver_email: MyString
+  status: MyString
+  requested_at: 2012-04-11
+  approved_at: 2012-04-11

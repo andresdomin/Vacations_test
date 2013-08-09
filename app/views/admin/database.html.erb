@@ -1,0 +1,17 @@
+<%= form_tag({:action => :upload}, :multipart => true, :class => 'form-horizontal') do %>
+<fieldset>
+  <legend>Subir base de datos</legend>
+  
+  <div class="control-group">
+    <%= label_tag 'Base de Datos', nil,  :class => 'control-label' %>
+    <div class="controls">
+      <%= file_field_tag 'database' %> 
+    </div>
+  </div>
+  
+  <div class="form-actions">
+    <%= submit_tag 'Enviar', :class => 'btn btn-primary' %>
+    <%= link_to 'Cancelar', admin_path, :class => 'btn' %>
+  </div>
+</fieldset>
+<% end %>

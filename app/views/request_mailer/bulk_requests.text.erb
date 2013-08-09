@@ -1,0 +1,17 @@
+Solicitudes de Vacaciones realizadas Hoy
+
+<% @requests.each do |request| %>
+Solicitud:
+  Solicitante: <%= get_user_with_email(request.requester_email) %>
+  Jefe Inmediato: <%= get_user_with_email(request.approver_email) %>
+  Rango de Vacaciones (Aprobado):  <%= request.begin_at_approved ? request.begin_at_approved.strftime("%Y/%m/%d") : request.begin_at.strftime("%Y/%m/%d") %> a <%= request.end_at_approved ? request.end_at_approved.strftime("%Y/%m/%d") : request.end_at.strftime("%Y/%m/%d") %>
+  Regreso a la oficina: <%= request.return_at %>
+  Días Solicitados (Aprobados): <%= request.days_approved ? pluralize(request.days_approved, 'día', 'días') : pluralize(request.days, 'día', 'días') %>
+  Días a Pagar (Aprobados): <%= request.pay_days_approved ? pluralize(request.pay_days_approved, 'día','días') : pluralize(request.pay_days, 'día','días') %>
+  Adjuntó Carta: <%= request.letter_file ? 'Si' : 'No' %>
+  Observaciones: <%= request.comments %>
+  Fecha de Solicitud: <%= request.requested_at.in_time_zone('America/Bogota').strftime("%Y/%m/%d - %I:%M%p") %>
+  Estado: <%= request.status %>
+  Comentarios de Aprobación: <%= request.comments_approved %>
+
+<% end %>

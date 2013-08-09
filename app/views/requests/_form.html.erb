@@ -1,0 +1,155 @@
+# encoding: UTF-8
+<%= form_for @request, :html => { :class => 'form-horizontal form-requests' } do |f| %>
+  <% if @request.errors.any? %>
+     <div class="alert alert-error">No se puedo enviar su información</div>
+  <% end %>
+  <fieldset>
+    <legend>Solicitud de Vacaciones</legend>
+    
+    <div class="control-group alert alert-info">
+      A continuación diligencie el formulario para solicitar vacaciones, estas serán enviadas al jefe inmediato para la aprobación.
+    </div>
+    
+    <div class="control-group">
+      <%= f.label 'Nombre del Jefe Inmediato ', :class => 'control-label' %>
+      <div class="controls">
+        <div class="input-prepend">
+          <input type="text" id="leader_name" name="leader_name_"/>
+        </div>
+        <div class="input-prepend">
+            <h5>Digite y seleccione el nombre de la lista que se despliega</h5>
+        </div>
+        <div class="input-prepend">
+          <%= f.hidden_field :approver_email, :class => 'text_field required email' %>
+        </div>
+      </div>
+    </div>
+    
+    <div class="control-group">
+      <div class="alert alert-warning">Recuerde que tiene <b><%= pluralize(@vacations ? @vacations.available_days : '0', 'día disponible', 'días disponibles') %></b> a la fecha <%= @last_month.strftime("%Y/%m/%d")  %>. Solo podrá solicitar estos días, no los que tendría a la fecha de inicio de las vacaciones.</div> 
+    </div>
+    
+    <div class="control-group">
+      <h5>Fechas en las cuales quiere hacerlas efectivas</h5>
+    </div>
+    
+    <div class="control-group">
+     <%= f.label 'Inicio de vacaciones', :class =>'control-label' %>
+     <div class="controls">
+        <%= f.text_field :begin_at, :class => 'required' %>
+        </div>
+    </div>
+   
+   <div class="control-group">
+    <%= f.label 'Fin de vacaciones',  :class =>'control-label' %>
+         <div class="controls">
+        <%= f.text_field :end_at, :class => 'required' %>
+         </div>      
+   </div>
+   <div class="control-group">
+      <%= f.label 'Regreso a la oficina', :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :return_at, :class => 'control-label required', :id => 'return', :readonly => 'true' %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= f.label 'Días a Solicitar', :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :days, :class => 'number_field span1 required', :readonly => true %>
+      </div>
+    </div>
+    
+    <div class="control-group">
+      <h5>Compensación en dinero</h5>
+    </div>
+    
+    <div class="control-group">
+      <%= f.label 'Días a Solicitar', :class => 'control-label' %>
+      <div class="controls">
+        <%= f.number_field :pay_days, :class => 'number_field span1' %>
+      </div>
+    </div>
+    
+    <div id="paydays_letter" class="hide">
+      <div class="control-group">
+        <h5>Debe adjuntar una carta de solicitud de compensación en dinero para poder procesar el formulario</h5>
+      </div>
+      
+      <div class="control-group">
+        <%= f.label 'Carta de Solicitud', :class => 'control-label' %>
+        <div class="controls">
+          <%= f.file_field :letter_file %>
+        </div>
+      </div>
+    </div>
+    
+    <div class="control-group">
+      <%= f.label 'Observaciones', :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_area :comments, :class => 'text_area', :rows => 3 %>
+      </div>
+    </div>
+    
+    <div class="form-actions">
+
+      <div id="error_container">
+      <% 
+          if @disabled || @several_requests || @not_show
+            @action=true
+            if @several_requests
+              %>
+              <div id='error1'><span class="alert alert-error">Ya ha realizado una solicitud, no se le permitirán hacer más hasta que la otra sea aprobada o rechazada.</span></div>
+              <%
+            end
+            if @not_show
+              %>
+              <div id='error2'><span class="alert alert-error">Tiene una solicitud aprobada en estos momentos. Espere a que pase el rango en que fue aceptada para volver a hacer una solicitud</span></div>
+              <%
+            end
+          else  
+            @action=false
+          end
+      %>
+      </div>
+  </div>
+      
+      <a class="btn btn-primary btn-accept" data-toggle="modal" href="#myModal" id="confirm">Enviar</a>
+      <%= link_to 'Cancelar', requests_path, :class => 'btn' %>
+    
+    <input type="hidden" id="available_days" value="<%= @vacations ? @vacations.available_days : '0' %>"/>
+  </fieldset>
+
+
+
+  <div class="modal hide" id="myModal">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>Confirmación de la solicitud</h3>
+         <strong>Antes de enviar, revise atentamente si no hay algún error en su solicitud, luego presione enviar.</strong>
+      </div>
+      <div clss="modal-body">
+          <div class="summary_label" >
+            <h4>Fecha de inicio de vacaciones:</h4>
+            <span id="begin"></span>
+          </div>
+          <div class="summary_label" >
+            <h4>Fecha de finalización de vacaciones: </h4>
+            <span id="end"></span>
+          </div>
+          <div class="summary_label" >
+            <h4>Fecha de regreso de vacaciones:</h4>
+            <span id="returning"></span>
+          </div>
+          <div class="summary_label" >
+            <h4>Días a solicitar:</h4>
+            <span id="requested"></span>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <%= f.submit @disabled || @several_requests ? 'No puede solicitar vacaciones' : 'Enviar', :class => 'btn btn-primary btn-accept', :id => 'send', :disabled => @action %>
+        <a href="#" class="btn" data-dismiss="modal" id="close_popup">Cancelar</a>
+      </div>
+  </div>
+
+  
+<% end %>

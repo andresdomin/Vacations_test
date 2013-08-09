@@ -1,0 +1,16 @@
+.summary_label{
+  margin-left: 15px;
+}
+#return{
+  text-align: left;
+  
+}
+#error2{
+  margin-top: 20px;
+}
+.item_name_autocomplete{
+  font-weight: bold;
+}
+.item_position_autocomplete{
+  font-size: 10px;
+}

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  identification: MyString
+  company: MyString
+  fullname: MyString
+  entry_at: 2012-04-11
+  available_days: 1
+
+two:
+  identification: MyString
+  company: MyString
+  fullname: MyString
+  entry_at: 2012-04-11
+  available_days: 1

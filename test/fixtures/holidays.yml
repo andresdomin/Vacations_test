@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  holiday_at: 2012-05-04
+  country: MyString
+
+two:
+  holiday_at: 2012-05-04
+  country: MyString

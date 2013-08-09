@@ -1,0 +1,127 @@
+<%- model_class = @request.class -%>
+<%= form_for(@request, :html => { :class => 'form-requests' })  do %>
+  <fieldset>
+    <legend>Detalle de Solicitud</legend>
+      <div class="row control-group">
+        <div class="span2">
+          <b>Solicitante</b>
+        </div>
+        <div class="span6 controls">
+          <%= get_user_with_email(@request.requester_email) %>
+        </div>
+      </div>
+      <div class="row control-group">
+        <div class="span2">
+          <b>Jefe Inmediato</b>
+        </div>
+        <div class="span6 controls">
+          <%= get_user_with_email(@request.approver_email) %>
+        </div>
+      </div>
+      <div class="row control-group">
+        <div class="span2">
+          <b>Unidad de Negocios</b>
+        </div>
+        <div class="span6 controls">
+          <%= @vacations ? @vacations.company : '' %>
+        </div>
+      </div>
+      <div class="row control-group">
+        <div class="span2">
+          <b>Rango de Vacaciones solicitado</b>
+        </div>
+        <div class="span6 controls">
+          <% if @is_approver || @is_admin %>
+            <input id="request_begin_at" name="request[begin_at_approved]" type="text" value="<%= @request.begin_at_approved ? @request.begin_at_approved.strftime("%Y/%m/%d") : @request.begin_at.strftime("%Y/%m/%d") %>" class="" />
+            
+            <input id="request_end_at"  name="request[end_at_approved]" type="text" value="<%= @request.end_at_approved ? @request.end_at_approved.strftime("%Y/%m/%d") : @request.end_at.strftime("%Y/%m/%d") %>" class="" />
+          <% else %> 
+            <%= @request.begin_at_approved ? @request.begin_at_approved.strftime("%Y/%m/%d") : @request.begin_at.strftime("%Y/%m/%d") %> a <%= @request.end_at_approved ? @request.end_at_approved.strftime("%Y/%m/%d") : @request.end_at.strftime("%Y/%m/%d") %>
+          <% end %>
+        </div>
+      </div>
+      <div class="row control-group">
+        <div class="span2">
+          <b>Regreso a la oficina</b>
+        </div>
+        <div class="span4 controls" id="back_to_office">
+            <%= @request.return_at %>
+        </div>
+      </div>
+      <div class="row control-group">
+        <div class="span2">
+          <b>Días Disponibles</b>
+        </div>
+        <div class="span4 controls">
+          <%= pluralize(@vacations? @vacations.available_days : '0', 'día', 'días') %> a <%= @last_month.strftime("%Y/%m/%d") %>
+        </div>
+      </div>
+      <div class="row control-group">
+        <div class="span2">
+          <b>Días Solicitados</b>
+        </div>
+        <div class="span4 controls">
+          <% if @is_approver || @is_admin %>
+            <input id="request_days" type="number" name="request[days_approved]" class="span1" readonly="readonly" value="<%= @request.days_approved ? @request.days_approved : @request.days %>" />
+          <% else %> 
+            <%= @request.days_approved ? pluralize(@request.days_approved, 'día', 'días') : pluralize(@request.days, 'día', 'días') %>
+          <% end %>
+        </div>
+      </div>
+       <div class="row control-group">
+        <div class="span2">
+          <b>Días Compensación en Dinero</b>
+        </div>
+        <div class="span4 controls">
+          <% if @is_approver || @is_admin %>
+            <input id="request_pay_days" type="number" name="request[pay_days_approved]" class="span1" value="<%= @request.pay_days_approved ? @request.pay_days_approved : @request.pay_days %>" />
+          <% else %> 
+            <%= @request.pay_days_approved ? pluralize(@request.pay_days_approved, 'día','días') : pluralize(@request.pay_days, 'día','días') %>
+          <% end %>
+        </div>
+      </div>
+      <% if @request.letter_file %>
+        <div class="row control-group">
+          <div class="span2">
+            <b>Carta de Solicitud</b>
+          </div>
+          <div class="span4 controls">
+            <%= link_to "#{@request.letter_file}", "/uploads/#{@request.letter_file}"  %>
+          </div>
+        </div>
+      <% end %>  
+      <div class="row control-group">
+        <div class="span2">
+          <b>Observaciones</b>
+        </div>
+        <div class="span4 controls">
+          <%= @request.comments %>
+        </div>
+      </div>
+      <div class="row control-group">
+        <div class="span2">
+          <b>Fecha de Solicitud</b>
+        </div>
+        <div class="span4 controls">
+          <%= @request.requested_at.in_time_zone('America/Bogota').strftime("%Y/%m/%d - %I:%M%p") %>
+        </div>
+      </div>
+      <div class="row control-group">
+        <div class="span2">
+          <b>Estado</b>
+        </div>
+        <div class="span4 controls">
+          <%= @request.status %>
+        </div>
+      </div>
+      <% if @is_approver || @is_admin %>
+        <div class="form-actions">
+          <label>Observaciones</label>
+          <textarea name="request[comments_approved]"><%= @request.comments_approved %></textarea><br />
+          <input type="hidden" id="available_days" value="<%= @vacations ? @vacations.available_days : '0' %>"/>
+          <input type="submit" class="btn btn-success" name="request[status]" value="Aprobar" />
+          <input type="submit" class="btn btn-danger" name="request[status]" value="Rechazar" />
+        </div>
+      <% end %>
+  </fieldset>
+<% end %>

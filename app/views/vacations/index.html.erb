@@ -1,0 +1,23 @@
+<h2>Base de datos días disponibles</h2>
+<table class="table table-striped dataTables">
+  <thead>
+    <tr>
+      <th>Cédula</th>
+      <th>Nombre Completo</th>
+      <th>Unidad de Negocio</th>
+      <th>Fecha de Ingreso</th>
+      <th>Días Disponibles</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @vacations.each do |vacation| %>
+      <tr>
+        <td><%= vacation.identification %></td>
+        <td><%= vacation.fullname %></td>
+        <td><%= vacation.company %></td>
+        <td><%= vacation.entry_at.strftime("%Y/%m/%d") %></td>
+        <td><%= vacation.available_days %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

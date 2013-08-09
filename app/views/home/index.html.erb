@@ -1,0 +1,11 @@
+<div class="hero-unit">
+  <h2>¡Bienvenido!</h2>
+  <p>En este sitio podrás realizar tus solicitudes de vacaciones.</p>
+  <p>
+    <% if user_signed_in? %>
+      <%= link_to 'Crear Solicitud', new_request_path, :class => 'btn btn-primary btn-large' %>
+    <% else %>
+      <%= link_to 'Ingresar', new_user_session_path, :class => 'btn btn-primary btn-large' %>
+    <% end %>
+  </p>
+</div>

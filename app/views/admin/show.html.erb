@@ -1,0 +1,37 @@
+<%= form_tag({:action => :save_leaders}, :class => 'form-horizontal') do %>
+  <h2>Base de datos de " leaders" </h2>
+  <fieldset>
+    <legend>Información a guardar</legend>
+    <table class="table table-striped dataTables">
+      <thead>
+        <tr>
+          <th>Identificación</th>
+          <th>Nombre</th>
+          <th>Correo electrónico</th>
+          <th>Ciudad</th>
+          <th>Unidad de negocio</th>
+          <th>Cargo y nivel</th>
+          <th>Persona de la que depende</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @leaders.each do |leader| %>
+          <tr>
+            <td><%= leader.identification %></td>
+            <td><%= leader.name %></td>
+            <td><%= leader.email %></td>
+            <td><%= leader.city %></td>
+            <td><%= leader.company %></td>
+            <td><%= leader.position %></td>
+            <td><%= leader.leader_id %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="form-actions">
+      <%= hidden_field_tag 'filename', @filename %>
+      <%= submit_tag 'Guardar', :class => 'btn btn-primary' %>
+      <%= link_to 'Cancelar', admin_path, :class => 'btn' %>
+    </div>
+  </fieldset>
+  <% end %>

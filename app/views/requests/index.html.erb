@@ -1,0 +1,40 @@
+<%- model_class = Request.new.class -%>
+<h2>Solicitudes</h2>
+<table id="requestsTable" class="table table-striped">
+  <thead>
+    <tr>
+      <th>Empleado</th>
+      <th>Identificación</th>
+      <th>Unidad de negocio</th>
+      <th>Jefe</th>
+      <th>Fecha de Solicitud</th>
+      <th>Fecha Inicio</th>
+      <th>Fecha Fin</th>
+      <th>Fecha de regreso a la oficina</th>
+      <th>Días Solicitados</th>
+      <th>Días a Pagar</th>
+      <th>Estado</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @requests.each do |request| %>
+      <tr>
+        <td><%= get_user(request.requester_email) %></td>
+        <td><%= request.requester.identification %></td>
+        <td><%= request.requester.vacations.company %></td>
+        <td><%= get_user(request.approver_email) %></td>
+        <td><%= request.requested_at.in_time_zone('America/Bogota').strftime("%Y/%m/%d - %I:%M%p") %></td>
+        <td><%= request.begin_at_approved ? request.begin_at_approved.strftime("%Y/%m/%d") : request.begin_at.strftime("%Y/%m/%d") %></td>
+        <td><%= request.end_at_approved ? request.end_at_approved.strftime("%Y/%m/%d") : request.end_at.strftime("%Y/%m/%d") %></td>
+        <td><%= request.return_at %></td>
+        <td><%= request.days_approved ? request.days_approved : request.days %></td>
+        <td><%= request.pay_days_approved ? request.pay_days_approved : request.pay_days %></td>
+        <td><%= request.status %></td>
+        <td>
+          <a href="<%= request_path(request) %>" class="btn"><i class="icon-eye-open"></i> Ver Solicitud</a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

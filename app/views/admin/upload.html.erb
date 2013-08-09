@@ -1,0 +1,33 @@
+<%= form_tag({:action => :save}, :class => 'form-horizontal') do %>
+  <h2>Base de datos días disponibles</h2>
+  <fieldset>
+    <legend>Verificar Información</legend>
+    <table class="table table-striped dataTables">
+      <thead>
+        <tr>
+          <th>Cédula</th>
+          <th>Nombre Completo</th>
+          <th>Unidad de Negocio</th>
+          <th>Fecha de Ingreso</th>
+          <th>Días Disponibles</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @vacations.each do |vacation| %>
+          <tr>
+            <td><%= vacation.identification %></td>
+            <td><%= vacation.fullname %></td>
+            <td><%= vacation.company %></td>
+            <td><%= vacation.entry_at.strftime("%Y/%m/%d") if vacation.entry_at %></td>
+            <td><%= vacation.available_days %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="form-actions">
+      <%= hidden_field_tag 'filename', @filename %>
+      <%= submit_tag 'Guardar', :class => 'btn btn-primary' %>
+      <%= link_to 'Cancelar', admin_path, :class => 'btn' %>
+    </div>
+  </fieldset>
+<% end %>

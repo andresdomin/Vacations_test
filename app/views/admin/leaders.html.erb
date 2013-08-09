@@ -1,0 +1,17 @@
+<%= form_tag({:action => :show}, :multipart => true, :class => 'form-horizontal') do %>
+<fieldset>
+  <legend>Subir archivo de excel</legend>
+  
+  <div class="control-group">
+    <%= label_tag 'Archivo', nil,  :class => 'control-label' %>
+    <div class="controls">
+      <%= file_field_tag 'leaders' %> 
+    </div>
+  </div>
+  
+  <div class="form-actions">
+    <%= submit_tag 'Enviar', :class => 'btn btn-primary' %>
+    <%= link_to 'Cancelar', admin_path, :class => 'btn' %>
+  </div>
+</fieldset>
+<% end %>

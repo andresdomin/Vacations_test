@@ -1,0 +1,26 @@
+<div class="span4">
+  <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => 'form-login' }) do |f| %>
+    <fieldset>
+      <legend>Ingreso</legend>
+      
+      <div class="control-group">
+        <%= f.label 'Correo Electrónico' %>
+        <div class="controls">
+          <%= f.email_field :email, :class => 'email required' %>
+        </div>
+      </div>
+    
+      <div class="control-group">
+        <%= f.label 'Contraseña' %>
+        <div class="controls">
+          <%= f.password_field :password, :class => 'required' %>
+        </div>
+      </div>
+   
+      <div class="form-actions">
+        <%= f.submit "Ingresar", :class => 'btn-login btn btn-primary' %>
+      </div>
+      
+    </fieldset>
+  <% end %>
+</div>
